@@ -3,7 +3,7 @@ Weekly Individual Project Update Report
 
 ### Group number: L1-G3
 
-### Student name: Keith Lam
+### Student name: Dhrit Aravind
 
 ### Week: 6
 
