@@ -3,7 +3,7 @@ from sense_hat import SenseHat
 sense = SenseHat()
 
 UDP_IP = "localhost"
-UDP_PORT = 8080
+UDP_PORT = 5050
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
