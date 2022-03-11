@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 const server = express();
 
 import { initializeApp } from 'firebase/app'
-import { getDatabase} from 'firebase/database'
+import { getDatabase, ref, onValue} from 'firebase/database'
 const firebaseConfig = {
     apiKey: "AIzaSyAmHtdWuIyvGzFkxE_NNc7hMBMIDZ4eG7s",
     authDomain: "sysc3010-project-l1g3.firebaseapp.com",
@@ -12,7 +12,12 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app)
+const userRef = ref(db)
 
+onValue(userRef,(snapshot)=>{   //Listen for update
+    const data = snapshot.val();
+    console.log(data)
+})
 //server.use(express.static(__dirname+'/public')) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
