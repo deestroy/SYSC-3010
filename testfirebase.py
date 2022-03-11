@@ -46,14 +46,14 @@ def writeData():
     d = {'Meal_Name': Meal_Name, 'Meal_Type': Meal_Type, 'Calories': Calories, 'Weight':Weight, 'Date': str(Date)}
     sens = {'Meal_Name': Meal_Name, 'Meal_Type': Meal_Type, 'Calories': Calories, 'Weight':Weight, 'Date': str(Date)}
     db.child(dataset).child("Calorie_Count").child(c).set(sens)
-    di = {
-      c: d
-    }
-    df.append(di)
-    key = key + 1
-    j += 1
-    time.sleep(1)
-  df = set(df)
+#     di = {
+#       c: d
+#     }
+#     df.append(di)
+#     key = key + 1
+#     j += 1
+#     time.sleep(1)
+#   df = set(df)
     
 def readData():
   # Returns the entry as an ordered dictionary (parsed from json)
@@ -68,7 +68,7 @@ def readData():
   # Takes the last element of the list
   print("Child Value: {}\n".format(lastDataPoint.val()))
   
-  TestCase().assertDictEqual(, myFoodData_list)
+#   TestCase().assertDictEqual(, myFoodData_list)
 
 
 if __name__ == "__main__":
