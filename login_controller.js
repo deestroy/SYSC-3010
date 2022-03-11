@@ -1,6 +1,7 @@
 import {OAuth2Client} from 'google-auth-library';
-var CLIENT_ID ='363664896936-hnbv6e362m5rs4lvdeb8236go8g0agpk.apps.googleusercontent.com'
-const client = new OAuth2Client(CLIENT_ID);
+var CLIENT_ID ='591797426704-jgsrnsm0ejafrp8tt8rassrhacf8n976.apps.googleusercontent.com'
+var CLIENT_SECRET = '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'
+const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET);
 var userid;
 async function verify(req, res, next){
 

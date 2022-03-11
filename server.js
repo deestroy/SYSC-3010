@@ -1,10 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser'
+import url from "url"
 import { sendToRPI_Controller } from './send_datagram.js';
 import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, onValue} from 'firebase/database'
+import { getDatabase, ref, onValue, get, child} from 'firebase/database'
 import { verify } from './login_controller.js';
 
+const path = '/home/pi/Documents/Project/SYSC-3010/public'
 const server = express();
 const firebaseConfig = {
     apiKey: "AIzaSyAmHtdWuIyvGzFkxE_NNc7hMBMIDZ4eG7s",
@@ -28,11 +30,30 @@ server.get('/',(req,res)=>{
     res.send('A simple Node app is runing on this server')
     res.end();
 })
-server.use(verify)
+server.get('/login.html', (req,res)=>{
+    res.sendFile(path+'/login.html')
+})
 server.post('/login',(req,res)=>{
+    console.log('ran')
     verify(req,res, ()=>{
         res.sendFile('/public/home.html')
     })
+})
+server.get('/:user',async (req,res)=>{
+    console.log(req.params)
+    var userid=req.params.user
+    console.log(userid)
+    get(child(userRef,userid)).then((snapshot)=>{
+        if(snapshot.exists()){
+            console.log(snapshot.val())
+            res.send(snapshot.val())
+        }else{
+            res.sendStatus(404)
+        }
+    }).catch((error) => {
+        console.error(error);
+
+      });
 })
 
 server.post('/display', (req, res)=>{
@@ -40,5 +61,5 @@ server.post('/display', (req, res)=>{
     res.statusCode(200)
 })
 
-const PORT = process.env.PORT ||5000;
+const PORT = process.env.PORT ||7500;
 server.listen(PORT, console.log(`Server started  on port ${PORT}`))
