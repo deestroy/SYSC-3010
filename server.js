@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { sendToRPI_Controller } from './send_datagram';
+import { sendToRPI_Controller } from './send_datagram.js';
 const server = express();
 
 import { initializeApp } from 'firebase/app'
@@ -29,6 +29,8 @@ server.get('/',(req,res)=>{
 })
 server.post('/display', (req, res)=>{
     sendToRPI_Controller("This is test",8080,'localhost')
+    res.statusCode(200)
 })
+
 const PORT = process.env.PORT ||5000;
 server.listen(PORT, console.log(`Server started  on port ${PORT}`))
