@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import { sendToRPI_Controller } from './send_datagram.js';
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, onValue} from 'firebase/database'
-import { verify } from './login_controller';
+import { verify } from './login_controller.js';
 
 const server = express();
 const firebaseConfig = {
@@ -20,7 +20,7 @@ onValue(userRef,(snapshot)=>{   //Listen for update
     const data = snapshot.val();
     console.log(data)
 })
-server.use(express.static(__dirname+'/public')) //static files location
+server.use(express.static('/home/pi/Documents/Project/SYSC-3010/public/public')) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
 
@@ -28,9 +28,13 @@ server.get('/',(req,res)=>{
     res.send('A simple Node app is runing on this server')
     res.end();
 })
-server.get('/login',verify(req, res, (req, res)=>{
-    res.sendFile('./public/home.html')
-}))
+server.use(verify)
+server.post('/login',(req,res)=>{
+    verify(req,res, ()=>{
+        res.sendFile('/public/home.html')
+    })
+})
+
 server.post('/display', (req, res)=>{
     sendToRPI_Controller("This is test",8080,'localhost')
     res.statusCode(200)
