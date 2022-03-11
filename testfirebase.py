@@ -20,7 +20,7 @@ ty = ["Breakfast", "Lunch", "Dinner"]
 
 # Write random numbers to database
 def writeData():
-  key = 5
+  key = 0
   x = datetime.datetime.now()
   sense = SenseHat()
   while True:
@@ -45,7 +45,7 @@ def writeData():
     #sensorData
     c = "Item" + str(key)
     print(type(c))
-    sens = {'Meal_Name': Meal_Name, 'Meal_Type':Meal_Type, 'Calories': Calories, 'Weight':Weight, 'Date': Date}
+    sens = {'Meal_Name': Meal_Name, 'Meal_Type':Meal_Type, 'Calories': Calories, 'Weight':Weight, 'Date': str(Date)}
     db.child(dataset).child("Calorie_Count").child(c).set(sens)
 
     key = key + 1
