@@ -42,7 +42,7 @@ server.post('/login',(req,res)=>{
 server.get('/:user',async (req,res)=>{
     console.log(req.params)
     var userid=req.params.user
-    console.log(userid)
+    console.log("GET request for: "+userid)
     get(child(userRef,userid)).then((snapshot)=>{
         if(snapshot.exists()){
             console.log(snapshot.val())
@@ -56,9 +56,13 @@ server.get('/:user',async (req,res)=>{
       });
 })
 
+server.post('/scan', (req, res)=>{
+    sendToRPI_Controller("This is test",5050,'192.168.86.30')
+    res.sendStatus(200)
+})
 server.post('/display', (req, res)=>{
-    sendToRPI_Controller("This is test",8080,'localhost')
-    res.statusCode(200)
+    sendToRPI_Controller("This is test",8080,'192.168.2.31')
+    res.sendStatus(200)
 })
 
 const PORT = process.env.PORT ||7500;
