@@ -1,10 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import url from "url"
 import { sendToRPI_Controller } from './send_datagram.js';
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, onValue, get, child} from 'firebase/database'
-import { verify } from './login_controller.js';
+import { verify } from './Controllers/login_controller.js'
 
 const path = '/home/pi/Documents/Project/SYSC-3010/public'
 const server = express();
@@ -22,7 +21,7 @@ onValue(userRef,(snapshot)=>{   //Listen for update
     const data = snapshot.val();
     console.log(data)
 })
-server.use(express.static('/home/pi/Documents/Project/SYSC-3010/public/public')) //static files location
+server.use(express.static(path)) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
 
@@ -30,16 +29,12 @@ server.get('/',(req,res)=>{
     res.send('A simple Node app is runing on this server')
     res.end();
 })
-server.get('/login.html', (req,res)=>{
-    res.sendFile(path+'/login.html')
-})
+
 server.post('/login',(req,res)=>{
-    console.log('ran')
-    verify(req,res, ()=>{
-        res.sendFile('/public/home.html')
-    })
+    req.header('Content-Type','application/json')
+    verify(req, res)
 })
-server.get('/:user',async (req,res)=>{
+server.get('/user/:user_id',async (req,res)=>{
     console.log(req.params)
     var userid=req.params.user
     console.log("GET request for: "+userid)

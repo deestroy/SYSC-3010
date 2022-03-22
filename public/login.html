@@ -5,9 +5,21 @@
         <meta name="google-signin-client_id" content="591797426704-jgsrnsm0ejafrp8tt8rassrhacf8n976.apps.googleusercontent.com">
         
     </head>
+    
     <body>
 
         <h1>Login</h1>
+        <style>
+            input[type=text], input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+  
+        </style>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <a href="#" onclick="signOut();">Sign out</a>
         <script>
