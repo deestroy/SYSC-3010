@@ -5,12 +5,6 @@ function onSignIn(googleUser) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/login');
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function(){
-      if(xhr.responseText == 'success'){
-        console.log("success");
-        
-      }
-    }
     
     xhr.send(JSON.stringify({token: id_token}));
     }

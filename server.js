@@ -4,8 +4,14 @@ import { sendToRPI_Controller } from './send_datagram.js';
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, onValue, get, child} from 'firebase/database'
 import { verify } from './Controllers/login_controller.js'
+import path from 'path';
+import {fileURLToPath} from 'url';
 
-const path = '/home/pi/Documents/Project/SYSC-3010/public'
+const __filename = fileURLToPath(import.meta.url);
+
+// 👇️ "/home/john/Desktop/javascript"
+const __dirname = path.dirname(__filename);
+
 const server = express();
 const firebaseConfig = {
     apiKey: "AIzaSyAmHtdWuIyvGzFkxE_NNc7hMBMIDZ4eG7s",
@@ -21,13 +27,16 @@ onValue(userRef,(snapshot)=>{   //Listen for update
     const data = snapshot.val();
     console.log(data)
 })
-server.use(express.static(path)) //static files location
+server.use(express.static(__dirname+'/public')) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
 
 server.get('/',(req,res)=>{
-    res.send('A simple Node app is runing on this server')
+    res.redirect('/home.html')
     res.end();
+})
+server.get('/home.html', (req,res)=>{
+    res.sendFile('/public/home.html')
 })
 
 server.post('/login',(req,res)=>{
