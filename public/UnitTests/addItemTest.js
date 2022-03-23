@@ -1,9 +1,13 @@
 
 describe('#addItem()', function(){
+   this.beforeEach(function(){  //remove data from table
+     // document.getElementById('UserData').children.item(0).children.item(1)
+
+   })
     context('No arguments', function(){
         it('should return false table not updated', function(){
             expect(addItem()).to.equal(false)
-            expect(document.getElementById('UserData').childElementCount).to.equal(1)
+            expect(document.getElementById('UserData').children.item(0).childElementCount).to.equal(1)
 
         })
     })
@@ -24,7 +28,9 @@ describe('#addItem()', function(){
     })
     context('Incorect Arguments', function(){
         it('Throw error, and table not updated', function(){
-            expect(addItem({Meal_Name:'kiwi',calories:'2',Weight:50,Meal_Type:'Fruit',Date:'2022-03-11 12:58:42.676354'})).to.throw(TypeError,'Incorrect Arguments')
+            expect(function(){
+                addItem({Meal_Name:'kiwi',calories:'2',Weight:50,Meal_Type:'Fruit',Date:'2022-03-11 12:58:42.676354'})}).to.throw(TypeError,'Incorrect Arguments')
+            
         })
     })
 })

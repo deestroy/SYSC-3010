@@ -6,7 +6,7 @@ function addItem(item){
              tbBody.innerHTML+=`<tr><td>${item.Meal_Name}</td><td>${item.calories}</td><td>${item.Meal_Type}</td><td>${item.Weight}</td><td>${item.Date}</td></tr>`
              return true;
         }
-        else throw TypeError
+        else throw new TypeError('Incorrect Arguments')
        
     }
     return false;
