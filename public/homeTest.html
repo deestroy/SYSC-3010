@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head><link rel="stylesheet" href="./node_modules/mocha/mocha.css"></head>
 <body>
 
 <h1>User Home</h1>
@@ -16,6 +16,16 @@
     </tr></tbody></table>
 
 <script src='addItem.js'></script>
-<script>addItem({Meal_Name:'apple',calories:50,Weight:50,Meal_Type:'Fruit',Date:'2022-03-11 12:58:42.676354'});</script>
+<div id="mocha"></div>
+
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script>
+    mocha.ui('bdd')
+    mocha.reporter('html');
+    var expect = chai.expect;
+</script>
+<script src='UnitTests/addItemTest.js'></script>
+<script>mocha.run()</script>
 </body>
 </html>

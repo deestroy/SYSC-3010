@@ -27,12 +27,12 @@ onValue(userRef,(snapshot)=>{   //Listen for update
     const data = snapshot.val();
     console.log(data)
 })
-server.use(express.static(__dirname+'/public')) //static files location
+//server.use(express.static(__dirname+'/public')) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
 
 server.get('/',(req,res)=>{
-    res.redirect('/home.html')
+    res.redirect('/public/home.html')
     res.end();
 })
 server.get('/home.html', (req,res)=>{
