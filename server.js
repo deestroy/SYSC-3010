@@ -30,13 +30,13 @@ onValue(userRef,(snapshot)=>{   //Listen for update
 //server.use(express.static(__dirname+'/public')) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
-
+server.use(express.static(__dirname+'/public'))
 server.get('/',(req,res)=>{
-    res.redirect('/public/home.html')
+    res.redirect('/home.html')
     res.end();
 })
 server.get('/home.html', (req,res)=>{
-    res.sendFile('/public/home.html')
+    res.sendFile('/home.html')
 })
 
 server.post('/login',(req,res)=>{
