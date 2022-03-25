@@ -1,4 +1,4 @@
-import { getDatabase, ref, onValue, get, child, push} from 'firebase/database'
+import { getDatabase, ref, onValue, get, child, push, set} from 'firebase/database'
 import { initializeApp } from 'firebase/app'
 
 const firebaseConfig = {
@@ -12,6 +12,7 @@ const db = getDatabase(app)
 const userRef = ref(db)
 
 function getUserData(userid){
+    
     get(child(userRef,userid)).then((snapshot)=>{
         if(snapshot.exists()){
             return snapshot.val
@@ -26,13 +27,15 @@ function getUserData(userid){
 function pushUser(userid, user_email){
   
     if(getUserData(userid)==null){
-        push(child(userRef, userid),{
-         
-        'email':user_email,
-        'RPI_Controller_Address':'192.168.2.174:5050',
-        'RPI_Display_Address':'192.168.2.164:5050'
-    })
-        return true;
+        console.log('ran')
+        var baseRef = ref(db,userid)
+        var writeRef = push(baseRef)
+        set(writeRef, {
+            email: user_email,
+            RPI_Controller_Adress:'192.168.2.174',
+            RPI_Display_Adress:'192.170.2.174'
+        })
+        
     }
     return false;
    
