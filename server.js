@@ -1,9 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import { sendToRPI_Controller } from './send_datagram.js';
-import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, onValue, get, child} from 'firebase/database'
-import { verify } from './Controllers/login_controller.js'
+import { getUserData, pushUser} from './FireBaseFunctions.js'
+
+
+import { verify} from './Controllers/login_controller.js'
 import path from 'path';
 import {fileURLToPath} from 'url';
 
@@ -13,21 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const server = express();
-const firebaseConfig = {
-    apiKey: "AIzaSyAmHtdWuIyvGzFkxE_NNc7hMBMIDZ4eG7s",
-    authDomain: "sysc3010-project-l1g3.firebaseapp.com",
-    databaseURL: "https://sysc3010-project-l1g3-default-rtdb.firebaseio.com",
-    storageBucket: "sysc3010-project-l1g3.appspot.com"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app)
-const userRef = ref(db)
 
-onValue(userRef,(snapshot)=>{   //Listen for update
-    const data = snapshot.val();
-    console.log(data)
-})
-//server.use(express.static(__dirname+'/public')) //static files location
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
 server.use(express.static(__dirname+'/public'))
@@ -41,23 +28,15 @@ server.get('/home.html', (req,res)=>{
 
 server.post('/login',(req,res)=>{
     req.header('Content-Type','application/json')
-    verify(req, res)
+    verify(req, res, __dirname+'/public')
+    
 })
 server.get('/user/:user_id',async (req,res)=>{
     console.log(req.params)
     var userid=req.params.user
     console.log("GET request for: "+userid)
-    get(child(userRef,userid)).then((snapshot)=>{
-        if(snapshot.exists()){
-            console.log(snapshot.val())
-            res.send(snapshot.val())
-        }else{
-            res.sendStatus(404)
-        }
-    }).catch((error) => {
-        console.error(error);
-
-      });
+    getUserData(userid)
+    
 })
 
 server.post('/scan', (req, res)=>{
