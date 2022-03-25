@@ -1,6 +1,6 @@
 import { getDatabase, ref, onValue, get, child, push, set} from 'firebase/database'
 import { initializeApp } from 'firebase/app'
-
+var data
 const firebaseConfig = {
     apiKey: "AIzaSyAmHtdWuIyvGzFkxE_NNc7hMBMIDZ4eG7s",
     authDomain: "sysc3010-project-l1g3.firebaseapp.com",
@@ -11,11 +11,14 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app)
 const userRef = ref(db)
 
-function getUserData(userid){
+async function getUserData(userid){
     
-    get(child(userRef,userid)).then((snapshot)=>{
+   await get(child(userRef,userid)).then((snapshot)=>{
         if(snapshot.exists()){
-            return snapshot.val
+            var val=snapshot.val()
+            data=val
+            console.log(data)
+            return val
         }else{
             return null
         }
@@ -40,4 +43,4 @@ function pushUser(userid, user_email){
     return false;
    
 }
-export { getUserData, pushUser}
+export { getUserData, pushUser, data}

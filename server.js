@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import { sendToRPI_Controller } from './send_datagram.js';
-import { getUserData, pushUser} from './FireBaseFunctions.js'
+import { getUserData, pushUser,data} from './FireBaseFunctions.js'
 
 
 import { verify} from './Controllers/login_controller.js'
-import path from 'path';
+import path, { parse } from 'path';
 import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,10 +33,12 @@ server.post('/login',(req,res)=>{
 })
 server.get('/user/:user_id',async (req,res)=>{
     console.log(req.params)
-    var userid=req.params.user
+    var userid=req.params.user_id
     console.log("GET request for: "+userid)
-    getUserData(userid)
-    
+    await getUserData(userid)
+    res.setHeader('Content-Type', 'application/json')
+    console.log(data)
+    res.send(data)
 })
 
 server.post('/scan', (req, res)=>{
