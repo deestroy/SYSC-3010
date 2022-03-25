@@ -20,7 +20,8 @@ async function verify(req, res){
     // const domain = payload['hd'];
     }
     verify(req.body.token, CLIENT_ID).then(()=>{
-        res.sendFile('./public/home.html')
+       
+        res.sendFile('/public/home.html')
     }).catch(()=>{
         console.error()
     })
