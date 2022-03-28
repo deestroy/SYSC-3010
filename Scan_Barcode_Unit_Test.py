@@ -1,3 +1,9 @@
+"""
+This code takes an image (.JPG) of a barcode and decodes the barcode into byte form data.
+
+Sorry, FLAKE8 was not working for me. Partial marks for me at best. RIP
+"""
+
 # Importing library
 import cv2
 from pyzbar.pyzbar import decode
