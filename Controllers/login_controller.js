@@ -23,7 +23,7 @@ async function verify(req, res, path){
     }
     verify(req.body.token, CLIENT_ID).then(()=>{
         pushUser(userid, email)
-        res.sendFile(path+'/home.html')
+        res.sendStatus(200)
        
     }).catch(()=>{
         console.error()

@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { sendToRPI_Controller } from './send_datagram.js';
 import { getUserData, pushUser} from './FireBaseFunctions.js'
 
 
@@ -46,7 +45,7 @@ server.post('/scan', (req, res)=>{
     res.sendStatus(200)
 })
 server.post('/display', (req, res)=>{
-    sendToRPI_Controller("This is test",8080,'192.168.2.31')
+    
     res.sendStatus(200)
 })
 
