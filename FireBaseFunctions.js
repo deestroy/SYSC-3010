@@ -2,7 +2,7 @@ import {
   getDatabase, ref, get, child, push, set,
 } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
-
+var data 
 const firebaseConfig = {
   apiKey: 'AIzaSyAmHtdWuIyvGzFkxE_NNc7hMBMIDZ4eG7s',
   authDomain: 'sysc3010-project-l1g3.firebaseapp.com',
@@ -20,9 +20,9 @@ async function getUserData(userid) {
   await get(child(userRef, userid)).then((snapshot) => {
     if (snapshot.exists()) {
       const val = snapshot.val();
-      return val;
+      return Promise.resolve(val)
     }
-    return null;
+    return Promise.resolve(null)
   }).catch((error) => {
     console.error(error);
   });
@@ -33,20 +33,22 @@ async function getUserData(userid) {
  * @param {*} user_email the email of the user
  * @returns true if the user was added false if it wasnt
  */
-function pushUser(userid, userEmail) {
-  if (getUserData(userid) == null) {
+async function pushUser(userid, userEmail) {
+  var data = await getUserData(userid)
+  if ( data == null) {
     const baseRef = ref(db, userid);
-    const writeRef = push(baseRef);
-    set(writeRef, {
+    push(baseRef);
+    let user = {
       email: userEmail,
       RPI_Controller_Adress: '192.168.2.174',
       RPI_Display_Adress: '192.170.2.174',
-    });
+    }
+    set(baseRef, user);
     return true;
   }
   return false;
 }
-export { getUserData, pushUser };
+export { getUserData, pushUser, data };
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console
@@ -55,3 +57,4 @@ C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
 
 The no-console warning was ignored as the console output prints out an error message if error occurs.
  */
+//pushUser(1245,"test")
