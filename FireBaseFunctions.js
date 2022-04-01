@@ -17,15 +17,15 @@ const userRef = ref(db);
  * @param userid A user's google userid string
  */
 async function getUserData(userid) {
+  let userData = null
   await get(child(userRef, userid)).then((snapshot) => {
     if (snapshot.exists()) {
-      const val = snapshot.val();
-      return Promise.resolve(val)
+      userData = snapshot.val();
     }
-    return Promise.resolve(null)
   }).catch((error) => {
     console.error(error);
   });
+  return Promise.resolve(userData)
 }
 /**
  * Pushes a new User object to the firebase database

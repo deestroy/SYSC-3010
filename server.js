@@ -1,15 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import { getUserData, pushUser} from './FireBaseFunctions.js'
+import cookieParser from 'cookie-parser'
 
-
-import { verify} from './Controllers/login_controller.js'
-import path, { parse } from 'path';
+import { checkAuthenticated, verify} from './Controllers/login_controller.js'
+import path from 'path';
 import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 
-// 👇️ "/home/john/Desktop/javascript"
 const __dirname = path.dirname(__filename);
 
 const server = express();
@@ -17,12 +16,12 @@ const server = express();
 server.use(bodyParser.urlencoded({'extended':'true'}))
 server.use(bodyParser.json())
 server.use(express.static(__dirname+'/public'))
+server.use(cookieParser())
+
 server.get('/',(req,res)=>{
+    console.log('ran')
     res.redirect('/home.html')
     res.end();
-})
-server.get('/home.html', (req,res)=>{
-    res.sendFile('/home.html')
 })
 
 server.post('/login',(req,res)=>{
@@ -30,14 +29,16 @@ server.post('/login',(req,res)=>{
     verify(req, res, __dirname+'/public')
     
 })
-server.get('/user/:user_id',async (req,res)=>{
-    console.log(req.params)
-    var userid=req.params.user_id
-    console.log("GET request for: "+userid)
-    var data = await getUserData(userid)
-    res.setHeader('Content-Type', 'application/json')
-    console.log(data)
-    res.send(data)
+server.post('/user_items', (req, res)=>{
+    checkAuthenticated(req, res, async (req,res)=>{
+    
+        const USER_ID=req.body.userID
+        console.log("GET request for: "+USER_ID)
+        const USER_DATA = await getUserData(USER_ID)
+        res.setHeader('Content-Type', 'application/json')
+        console.log(USER_DATA)
+        res.send(USER_DATA)
+    })
 })
 
 server.post('/scan', (req, res)=>{

@@ -1,14 +1,12 @@
 const xhr = new XMLHttpRequest();
 xhr.onload= function(){
-    if(xhr.status==200){
-        console.log("ran")
+    if(xhr.status==204){
         window.location.href="home.html"
     }
 }
 function onSignIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
-    
-    
+ 
     xhr.open('POST', '/login');
     xhr.setRequestHeader('Content-Type', 'application/json');
     

@@ -5,28 +5,47 @@ const client = new OAuth2Client(CLIENT_ID)
 var userid
 var email
 //verifys token
-async function verify(req, res, path){
+async function verify(req, res){
 
     async function verify(token, clientID) {
 
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: clientID,  // Specify the CLIENT_ID of the app that accesses the backend
-        // Or, if multiple clients access the backend:
-        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-    });
-    const payload = ticket.getPayload();
-    userid = payload['sub'];
-    email = payload.email
-    // If request specified a G Suite domain:
-    // const domain = payload['hd'];
-    }
-    verify(req.body.token, CLIENT_ID).then(()=>{
-        pushUser(userid, email)
-        res.sendStatus(200)
-       
-    }).catch(()=>{
-        console.error()
-    })
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: clientID,  
+        });
+        const payload = ticket.getPayload();
+        userid = payload['sub'];
+        email = payload.email
+        }
+        verify(req.body.token, CLIENT_ID).then(()=>{
+            pushUser(userid, email)
+            res.cookie('user_cookie',req.body.token,{expires:new Date(Date.now()+600000), httpOnly: true})
+            
+            res.sendStatus(204)
+        }).catch(()=>{
+            console.error()
+        })
 }
-export{verify}
+
+function checkAuthenticated(req, res, next){
+    let token = req.cookies["user_cookie"]  
+    let userID
+    console.log('ran')
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID
+        });
+        const payload = ticket.getPayload();
+        userID = payload['sub'];
+      }
+      verify()
+      .then(()=>{
+          req.body.userID=userID
+          next(req, res);
+      }).catch(()=>{
+          res.redirect('/login.html')
+            return; });
+
+}
+export{verify, checkAuthenticated}
