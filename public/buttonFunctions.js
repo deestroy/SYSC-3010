@@ -23,8 +23,7 @@ const req = new XMLHttpRequest();
  * Sends a GET request to get all items for the user with userID = User0
  */
 function getItems() {
-  req.open('GET', '/user/User0');
-
+  req.open('POST','/user_items');
   req.send();
 }
 /**
@@ -40,7 +39,7 @@ req.onload = () => {
  * Calculate the total calories of clicked items
  */
 function calculate() {
-  const items = document.getElementsByClassName('clicked');
+  const items = Array.from(document.getElementsByClassName('clicked'));
   const itemList = [];
   items.map((item) => itemList.push(parseInt(item.children.item(1).innerHTML, 10)));
   const calories = calculateCalories(itemList);

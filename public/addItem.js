@@ -7,8 +7,8 @@
 function addItem(item) {
   const tbBody = document.getElementById('UserData').children.item(0);
   if (item != null) {
-    if (typeof item.Meal_Name === 'string' && typeof item.Meal_Type === 'string' && typeof item.calories === 'number' && typeof item.Weight === 'number' && typeof item.Date === 'string') {
-      tbBody.innerHTML += `<tr class='item' onclick='clickHandler(this)'><td>${item.Meal_Name}</td><td>${item.calories}</td><td>${item.Meal_Type}</td><td>${item.Weight}</td><td>${item.Date}</td></tr>`;
+    if (typeof item.Meal_Name === 'string' && typeof item.Meal_Type === 'string' && typeof item.Calories === 'number' && typeof item.Weight === 'number' && typeof item.Date === 'string') {
+      tbBody.innerHTML += `<tr class='item' onclick='clickHandler(this)'><td>${item.Meal_Name}</td><td>${item.Calories}</td><td>${item.Meal_Type}</td><td>${item.Weight}</td><td>${item.Date}</td></tr>`;
       return true;
     }
     throw new TypeError('Incorrect Arguments');

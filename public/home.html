@@ -26,6 +26,13 @@
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/user_items')
     xhr.send()
+    xhr.onload=()=>{
+        const USER_DATA = JSON.parse(xhr.response)
+        const items = USER_DATA['Calorie_Count']
+        Object.keys(items).forEach((key) => {
+        addItem(items[key]);
+  });
+    }
 </script>
 </body>
 </html>
