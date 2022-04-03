@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { getUserData, pushUser} from './FireBaseFunctions.js'
+import { getUserData, getUserStats, pushUser} from './FireBaseFunctions.js'
 import cookieParser from 'cookie-parser'
 
 import { checkAuthenticated, verify} from './Controllers/login_controller.js'
@@ -42,12 +42,43 @@ server.post('/user_items', (req, res)=>{
 })
 
 server.post('/scan', (req, res)=>{
-    sendToRPI_Controller("This is test",5050,'192.168.86.30')
+  
     res.sendStatus(200)
 })
-server.post('/display', (req, res)=>{
-    
-    res.sendStatus(200)
+
+server.post('/getStats', (req, res)=>{
+    checkAuthenticated(req, res, async(req, res)=>{
+        const TYPE = req.body.type
+        const STATS = getUserStats(req.body.userID)
+        const CURRENT_DATE = Date.now()
+        let dataSet = {}  
+        let xy= {}
+        let startDate = null
+        if(TYPE=="MONTHLY"){
+             startDate = new Date(CURRENT_DATE)
+             startDate.setDate(startDate.getDate-30)
+             Object.keys(STATS).forEach((key)=>{
+                if(key.getTime()>startDate.getTime()){
+                    xy.key = STATS[key];
+                }
+             });
+        }else if(TYPE=="YEARLY"){
+            startDate = new Date(CURRENT_DATE)
+            startDate.setFullYear(startDate.getFullYear-1)
+             
+            Object.keys(STATS).forEach((key)=>{
+                if(key.getTime()>startDate.getTime()){
+                    xy.key = STATS[key];
+                }
+             });
+        }else{
+            dataSet.x = Object.keys(STATS)
+            dataSet.y = Object.values(STATS)
+        }
+        dataSet.x = Object.keys(xy)
+        dataSet.y = Object.values(xy)
+        res.send(JSON.stringify(dataSet))
+    })
 })
 
 const PORT = process.env.PORT ||7500;

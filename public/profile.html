@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html style="min-height: 100%;position: relative;">
+    <head><link rel="stylesheet" href="css/profile.css"> </head>
+    
+    <body style="height: 100vh;">
+        <div style=" background-color: #fafafa;; height: 100%; display: flex; flex-wrap: wrap;align-content: flex-start; flex-direction: column;">
+            <h1 style="width: 100%;">Profile</h1>
+            <form method="POST" style="display: flex;flex-wrap: wrap;background-color: rgb(215 215 255); row-gap: 10px; padding: 10px;">
+                
+                    <div class="form-row"><label for="userName" class="form-label">Name:</label><input type="text" id="userName" style="width:30%;"></input></div>
+                    <div class="form-row"><label for="userEmail" class="form-label">Email:</label><input type="email" id="userEmail" style="width:30%;"></input></div>
+                    <div class="form-row"> <label for="userBirthDate" class="form-label">Birth Date:</label><input type="date" id="userBirthDate" style="width:20%;"></div>
+                    <div class="form-row"><label for="userHeight" class="form-label">Height:</label><input type="number" id="userHeight" style="width: 20%;"></div>
+                    <div class="form-row"><label for="userWeight" class="form-label">Weight:</label><input type="number" style="width: 20%;"></div>
+                    <div class="form-row" style="align-content: flex-end;"><input type="submit" ></div>
+    
+                
+            </form>
+            <div style="width: 100%; padding-top: 10px;"><button onclick="getStats" style="border-style: none;">Stats</button><button onclick="getGoals" style="border-style: none;">Goals</button></div>
+            <div style="flex:1;background-color: rgb(215 215 255); padding-left: 30px;">
+                <h1>Stats</h1><button>Monthly</button><button>Yearly</button><button>All Time</button>
+                <div id="info" style="background-color: rgb(240, 240, 240); width: fit-content;;">
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div class="form-row">
+                            <label style="font-size: x-large;padding-right: 20px;">Moving Average:</label><label style="font-size: x-large;">0</label>
+                        </div>
+                        <div class="form-row">
+                             <label style="font-size: x-large;padding-right: 20px;">Median:</label><label style="font-size: x-large;">0</label>
+                        </div>
+    
+                    </div>
+                    
+                    <canvas id="myChart" style="width:fit-content;max-width:700px"></canvas>
+                </div>
+               
+            
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    </body>
+</html>
