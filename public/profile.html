@@ -18,8 +18,8 @@
             </form>
             <div style="width: 100%; padding-top: 10px;"><button onclick="getStats" style="border-style: none;">Stats</button><button onclick="getGoals" style="border-style: none;">Goals</button></div>
             <div style="flex:1;background-color: rgb(215 215 255); padding-left: 30px;">
-                <h1>Stats</h1><button>Monthly</button><button>Yearly</button><button>All Time</button>
-                <div id="info" style="background-color: rgb(240, 240, 240); width: fit-content;;">
+                <h1>Stats</h1><button onclick="monthButtonClick()">Monthly</button><button onclick="yearButtonClick()">Yearly</button><button onclick="allTimeButtonClick()">All Time</button>
+                <div id="info" style="background-color: rgb(240, 240, 240); width: 100%;;">
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="form-row">
                             <label style="font-size: x-large;padding-right: 20px;">Moving Average:</label><label style="font-size: x-large;">0</label>
@@ -30,12 +30,13 @@
     
                     </div>
                     
-                    <canvas id="myChart" style="width:fit-content;max-width:700px"></canvas>
+                    <canvas id="myChart" style="width:70%;max-width:700px"></canvas>
                 </div>
                
             
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src ="profileFunctions.js"></script>
     </body>
 </html>

@@ -18,6 +18,12 @@ function rescan() {
   req.setRequestHeader('Content-Type', 'application/json');
   req.send(JSON.stringify(itemList));
 }
+/**
+ * get Profile page
+ */
+function getProfile(){
+  window.location.href="profile.html"
+}
 const req = new XMLHttpRequest();
 /**
  * Sends a GET request to get all items for the user with userID = User0

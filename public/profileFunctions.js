@@ -23,13 +23,17 @@ function allTimeButtonClick(){
 function getStats(){
     request.open("POST", '/getStats' )
     request.setRequestHeader('Content-Type', "application/json")
-    request.send(type)
+    request.send(JSON.stringify(type))
 }
 request.onload=function(){
-    var data = request.response
-    x = Object.keys(data)
-    y = Object.values(data)
+    var data = JSON.parse(request.response)
+    x = data.x
+    y = data.y
+    myChart.data.labels=x
+    myChart.data.datasets[0].data=y
+    myChart.update()
 }
+
 
 const myChart = new Chart("myChart", {
     type: "bar",

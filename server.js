@@ -33,10 +33,8 @@ server.post('/user_items', (req, res)=>{
     checkAuthenticated(req, res, async (req,res)=>{
     
         const USER_ID=req.body.userID
-        console.log("GET request for: "+USER_ID)
         const USER_DATA = await getUserData(USER_ID)
         res.setHeader('Content-Type', 'application/json')
-        console.log(USER_DATA)
         res.send(USER_DATA)
     })
 })
@@ -49,17 +47,17 @@ server.post('/scan', (req, res)=>{
 server.post('/getStats', (req, res)=>{
     checkAuthenticated(req, res, async(req, res)=>{
         const TYPE = req.body.type
-        const STATS = getUserStats(req.body.userID)
+        const STATS = await getUserStats(req.body.userID)
         const CURRENT_DATE = Date.now()
         let dataSet = {}  
         let xy= {}
         let startDate = null
         if(TYPE=="MONTHLY"){
              startDate = new Date(CURRENT_DATE)
-             startDate.setDate(startDate.getDate-30)
+             startDate.setMonth(startDate.getMonth()-1)
              Object.keys(STATS).forEach((key)=>{
-                if(key.getTime()>startDate.getTime()){
-                    xy.key = STATS[key];
+                if(new Date(key).getTime()>startDate.getTime()){
+                    xy[key] = STATS[key];
                 }
              });
         }else if(TYPE=="YEARLY"){
@@ -67,7 +65,7 @@ server.post('/getStats', (req, res)=>{
             startDate.setFullYear(startDate.getFullYear-1)
              
             Object.keys(STATS).forEach((key)=>{
-                if(key.getTime()>startDate.getTime()){
+                if(new Date(key).getTime()>startDate.getTime()){
                     xy.key = STATS[key];
                 }
              });
