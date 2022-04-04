@@ -20,6 +20,7 @@ def BarcodeReader(image):
     # If not detected then print the message
     if not detectedBarcodes:
         print("Barcode Not Detected or your barcode is blank/corrupted!")
+        return False
     else:
        
           # Traverse through all the detected barcodes in image
