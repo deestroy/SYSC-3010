@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { addGoal, getUserData, getUserStats, pushUser} from './FireBaseFunctions.js'
+import { addGoal, getUserData, getUserGoals, getUserStats} from './FireBaseFunctions.js'
 import cookieParser from 'cookie-parser'
 
 import { checkAuthenticated, verify} from './Controllers/login_controller.js'
@@ -91,6 +91,12 @@ server.post('/addGoal',(req, res)=>{
     res.redirect('/profile.html')
     
 } )
-
+server.post('/getGoals', (req, res)=>{
+    checkAuthenticated(req, res, async(req,res)=>{
+        const GOALS = await getUserGoals(req.body.userID)
+        res.send(JSON.stringify(GOALS))
+    })
+  
+})
 const PORT = process.env.PORT ||7500;
 server.listen(PORT, console.log(`Server started  on port ${PORT}`))

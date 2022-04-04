@@ -27,9 +27,29 @@ async function getUserData(userid) {
   });
   return Promise.resolve(userData)
 }
+/**
+ * Gets the users Goals
+ * @param {String} userid the userid of the user
+ * @returns a Goals object
+ */
+async function getUserGoals(userid){
+  let userGoals = null
+  await get(child(userRef, userid+"/Goals")).then((snapshot)=>{
+    if(snapshot.exists()){
+      userGoals = snapshot.val()
+    }
+  }).catch((error)=>{
+    console.error(error)
+  })
+  return Promise.resolve(userGoals)
+}
+/**
+ * Gets the users Daily Intake
+ * @param {String} userid the google userid of the user
+ * @returns the Daily Intake object
+ */
 async function getUserStats(userid){
   let userStats= null
-  let startDate = null
   await get(child(userRef, userid+"/Daily_Intake")).then((snapshot)=>{
     if(snapshot.exists()){
       userStats = snapshot.val();
@@ -71,7 +91,7 @@ async function addGoal(userid, goal){
   push(baseRef)
   set(baseRef, goal)
 }
-export { getUserData, pushUser, getUserStats, addGoal};
+export { getUserData, pushUser, getUserStats, addGoal, getUserGoals};
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console
