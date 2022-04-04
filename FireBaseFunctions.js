@@ -91,7 +91,17 @@ async function addGoal(userid, goal){
   push(baseRef)
   set(baseRef, goal)
 }
-export { getUserData, pushUser, getUserStats, addGoal, getUserGoals};
+async function updateScanFlag(userid){
+  const baseRef = ref(db, userid+'/Scan_Items')
+  push(baseRef)
+  set(baseRef, true)
+}
+async function updateRescanTable(userid, items){
+  const baseRef =ref(db, userid+"/weigh_items")
+  push(baseRef)
+  set(baseref, items)
+}
+export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag};
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console

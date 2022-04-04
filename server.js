@@ -1,16 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { addGoal, getUserData, getUserGoals, getUserStats} from './FireBaseFunctions.js'
+import { addGoal, getUserData, getUserGoals, getUserStats, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
 import cookieParser from 'cookie-parser'
-
-import { checkAuthenticated, verify} from './Controllers/login_controller.js'
 import path from 'path';
 import {fileURLToPath} from 'url';
 
+import { checkAuthenticated, verify} from './Controllers/login_controller.js'
+
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
-
 const server = express();
 
 server.use(bodyParser.urlencoded({'extended':'true'}))
@@ -40,17 +38,18 @@ server.post('/user_items', (req, res)=>{
 })
 
 server.post('/scan', (req, res)=>{
-  
+    updateScanFlag(req.body.userID)
     res.sendStatus(200)
 })
+server.post('/rescan',(req,res)=>{
+    updateRescanTable(req.body)
 
+})
 server.post('/getStats', (req, res)=>{
     checkAuthenticated(req, res, async(req, res)=>{
         const TYPE = req.body.type
         const STATS = await getUserStats(req.body.userID)
         const CURRENT_DATE = Date.now()
-        let average=0
-        let median=0
         let dataSet = {}  
         let xy= {}
         let startDate = null
