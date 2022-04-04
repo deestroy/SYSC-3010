@@ -20,7 +20,7 @@ def BarcodeReader(image):
     # If not detected then print the message
     if not detectedBarcodes:
         print("Barcode Not Detected or your barcode is blank/corrupted!")
-        return False
+        return None
     else:
        
           # Traverse through all the detected barcodes in image
@@ -41,7 +41,8 @@ def BarcodeReader(image):
                 print(barcode.data)
                 print(barcode.data.decode("utf-8"))
                 print(barcode.type)
-                 
+                return barcode.data.decode("utf-8")
+        
     cv2.waitKey(0)
     cv2.destroyAllWindows()
  
