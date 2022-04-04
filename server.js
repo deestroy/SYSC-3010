@@ -39,12 +39,20 @@ server.post('/user_items', async(req, res)=>{
     })
 })
 
-server.post('/scan', (req, res)=>{
-    updateScanFlag(req.body.userID)
-    res.sendStatus(200)
+server.post('/scan', async(req, res)=>{
+    await checkAuthenticated(req,res, (req, res)=>{
+        updateScanFlag(req.body.userID, req.body.userEmail)
+        res.sendStatus(200)
+    })
+   
 })
-server.post('/rescan',(req,res)=>{
-    updateRescanTable(req.body)
+server.post('/rescan',async (req,res)=>{
+    await checkAuthenticated(req,res, (req, res)=>{
+       updateRescanTable(req.body)
+        updateScanFlag(req.body.userID, req.body.userEmail)
+        res.sendStatus(200)
+    })
+    
 
 })
 server.post('/intake', async (req, res)=>{
@@ -86,8 +94,8 @@ server.post('/getStats', async (req, res)=>{
         res.send(JSON.stringify(dataSet))
     })
 })
-server.post('/addGoal',(req, res)=>{
-    checkAuthenticated(req, res, (req, res)=>{
+server.post('/addGoal',async(req, res)=>{
+    await checkAuthenticated(req, res, (req, res)=>{
         const GOAL = {
             "name":req.body.goalName,
             "content":req.body.goalText,
@@ -100,8 +108,8 @@ server.post('/addGoal',(req, res)=>{
     res.redirect('/profile.html')
     
 } )
-server.post('/getGoals', (req, res)=>{
-    checkAuthenticated(req, res, async(req,res)=>{
+server.post('/getGoals', async(req, res)=>{
+    await checkAuthenticated(req, res, async(req,res)=>{
         const GOALS = await getUserGoals(req.body.userID)
         res.send(JSON.stringify(GOALS))
     })

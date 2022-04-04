@@ -78,6 +78,11 @@ async function getUserStats(userid){
  return Promise.resolve(userStats)
   
 }
+/**
+ * updates the users Daily Intake for the day
+ * @param {String} userid the google userid for user
+ * @param {Number} calories the amount of calories to add
+ */
 async function updateIntake(userid, calories){
   let intake
   const dateString = new Date().toISOString().split('T')[0]
@@ -104,15 +109,16 @@ async function updateIntake(userid, calories){
  */
 async function pushUser(userid, userEmail) {
   var data = await getUserData(userid)
+  const emailParts = userEmail.replace('@','')
+  emailParts.replace('.','')
   if ( data == null) {
     const baseRef = ref(db, userid);
     push(baseRef);
     let user = {
-      email: userEmail,
-      RPI_Controller_Adress: '192.168.2.174',
-      RPI_Display_Adress: '192.170.2.174',
+      email: userEmail
     }
     set(baseRef, user);
+    push(ref(db, '/display_'+emailParts))
     return true;
   }
   return false;
@@ -130,10 +136,20 @@ async function addGoal(userid, goal){
   push(baseRef)
   set(baseRef,goal)
 }
-async function updateScanFlag(userid){
-  const baseRef = ref(db, userid+'/Scan_Items')
+/**
+ * Updates the flags that RPI's listen to to scan items.
+ * @param {*} userid the userid of the user
+ * @param {*} email the email of the user
+ */
+async function updateScanFlag(userid, email){
+  let baseRef = ref(db, userid+'/ScanItems')
+  let emailParts = email.replace('@','')
+  emailParts = emailParts.replace('.','')
   push(baseRef)
   set(baseRef, true)
+  baseRef = ref(db,'RPI_Display/display_'+emailParts)
+  push(baseRef)
+  set(baseRef, 1 )
 }
 async function updateRescanTable(userid, items){
   const baseRef =ref(db, userid+"/weigh_items")

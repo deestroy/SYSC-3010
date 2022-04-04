@@ -3,7 +3,7 @@
  */
 function scan() {
   const req = new XMLHttpRequest();
-  req.open('get', '/scan');
+  req.open('POST', '/scan');
   req.send();
 }
 /**
