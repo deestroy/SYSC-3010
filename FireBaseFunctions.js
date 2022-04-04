@@ -61,7 +61,17 @@ async function pushUser(userid, userEmail) {
   }
   return false;
 }
-export { getUserData, pushUser, getUserStats};
+/**
+ * 
+ * @param {String, Number} userid the id of the user
+ * @param {Object} goal the goal object
+ */
+async function addGoal(userid, goal){
+  const baseRef = ref(db, userid+'/Goals/'+goal.name)
+  push(baseRef)
+  set(baseRef, goal)
+}
+export { getUserData, pushUser, getUserStats, addGoal};
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console

@@ -3,7 +3,7 @@
     <head><link rel="stylesheet" href="css/profile.css"> </head>
     
     <body style="height: 100vh;">
-        <div style=" background-color: #fafafa;; height: 100%; display: flex; flex-wrap: wrap;align-content: flex-start; flex-direction: column; ">
+        <div style=" background-color: #fafafa;; height: 100%; display: flex; flex-wrap: wrap;align-content: flex-start; flex-direction: row; ">
             <h1 style="width: 100%;">Profile</h1>
             <form method="POST" style="display: flex;flex-wrap: wrap;background-color: rgb(215 215 255); row-gap: 10px; padding: 10px; flex-grow: 1;">
                 
@@ -38,14 +38,15 @@
             <div style=" padding-left: 30px; background-color: rgb(215 215 255); flex-grow: 1;">
             <h1>Goals</h1>
             <p1>Enter your goal's and receive reminders. </p1>
-            <form method="POST" action="/addGoal" >
-                <textarea style="width: 100%;"></textarea>
-                <input type="date">
-                <input type="submit">
+            <form method="POST" action="/addGoal" enctype="application/x-www-form-urlencoded" >
+                <label for="goalName">Goal Name:</label><input type="text" name="goalName"></input>
+                <textarea name ="goalText"style="width: 100%;"></textarea>
+                <input name="completionDate" type="date">
+                <input type="submit" value="Submit">
             </form>
-            <div id="goals"></div>
-            
-             </div>
+            <table id="goals_table">
+
+            </table>
             
           
         </div>
