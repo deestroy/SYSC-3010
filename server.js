@@ -49,6 +49,8 @@ server.post('/getStats', (req, res)=>{
         const TYPE = req.body.type
         const STATS = await getUserStats(req.body.userID)
         const CURRENT_DATE = Date.now()
+        let average=0
+        let median=0
         let dataSet = {}  
         let xy= {}
         let startDate = null
@@ -62,16 +64,15 @@ server.post('/getStats', (req, res)=>{
              });
         }else if(TYPE=="YEARLY"){
             startDate = new Date(CURRENT_DATE)
-            startDate.setFullYear(startDate.getFullYear-1)
+            startDate.setFullYear(startDate.getFullYear()-1)
              
             Object.keys(STATS).forEach((key)=>{
                 if(new Date(key).getTime()>startDate.getTime()){
-                    xy.key = STATS[key];
+                    xy[key] = STATS[key];
                 }
              });
         }else{
-            dataSet.x = Object.keys(STATS)
-            dataSet.y = Object.values(STATS)
+           xy=STATS
         }
         dataSet.x = Object.keys(xy)
         dataSet.y = Object.values(xy)
