@@ -78,6 +78,23 @@ async function getUserStats(userid){
  return Promise.resolve(userStats)
   
 }
+async function updateIntake(userid, calories){
+  let intake
+  const dateString = new Date().toISOString().split('T')[0]
+  await get(child(userRef, userid+"/Daily_Intake/"+dateString)).then((snapshot)=>{
+    if(snapshot.exists()){
+      intake = snapshot.val()+calories
+    }
+    else{
+      intake= calories
+    }
+  }).catch((error)=>{
+    console.error(error);
+  })
+  const baseRef = ref(db, userid+"/Daily_Intake/"+dateString)
+  push(baseRef)
+  set(baseRef, intake)
+}
 
 /**
  * Pushes a new User object to the firebase database
@@ -124,7 +141,7 @@ async function updateRescanTable(userid, items){
   set(baseref, items)
 }
 
-export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag, getGoalsByDate};
+export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag, getGoalsByDate, updateIntake};
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console

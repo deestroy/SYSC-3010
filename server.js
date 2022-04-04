@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { addGoal, getGoalsByDate, getUserData, getUserGoals, getUserStats, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
+import { addGoal, getGoalsByDate, getUserData, getUserGoals, getUserStats, updateIntake, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
 import cookieParser from 'cookie-parser'
 import path from 'path';
 import {fileURLToPath} from 'url';
@@ -29,8 +29,8 @@ server.post('/login',(req,res)=>{
     verify(req, res, __dirname+'/public')
     
 })
-server.post('/user_items', (req, res)=>{
-    checkAuthenticated(req, res, async (req,res)=>{
+server.post('/user_items', async(req, res)=>{
+    await checkAuthenticated(req, res, async (req,res)=>{
     
         const USER_ID=req.body.userID
         const USER_DATA = await getUserData(USER_ID)
@@ -47,8 +47,14 @@ server.post('/rescan',(req,res)=>{
     updateRescanTable(req.body)
 
 })
-server.post('/getStats', (req, res)=>{
-    checkAuthenticated(req, res, async(req, res)=>{
+server.post('/intake', async (req, res)=>{
+    await checkAuthenticated(req,res, (req, res)=>{
+        updateIntake(req.body.userID,req.body.calories)
+        res.sendStatus(200)
+    })
+})
+server.post('/getStats', async (req, res)=>{
+    await checkAuthenticated(req, res, async(req, res)=>{
         const TYPE = req.body.type
         const STATS = await getUserStats(req.body.userID)
         const CURRENT_DATE = Date.now()

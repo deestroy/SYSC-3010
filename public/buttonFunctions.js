@@ -51,6 +51,16 @@ function calculate() {
   const calories = calculateCalories(itemList);
   document.getElementById('displayCals').innerHTML = calories;
 }
+function addToIntake(){
+  const items = Array.from(document.getElementsByClassName('clicked'));
+  const itemList = [];
+  items.map((item) => itemList.push(parseInt(item.children.item(1).innerHTML, 10)));
+  const calories = calculateCalories(itemList)
+  const request = new XMLHttpRequest()
+  request.open('POST', '/intake')
+  request.setRequestHeader('Content-Type', 'application/json')
+  request.send(JSON.stringify({'calories':calories}))
+}
 /**
  * On Item clicked, update the item's class to reflect if the item is selcted or not
  * @param elem the HTMLElement object that called clickHandler
