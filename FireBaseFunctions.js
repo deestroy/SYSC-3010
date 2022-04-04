@@ -44,6 +44,24 @@ async function getUserGoals(userid){
   return Promise.resolve(userGoals)
 }
 /**
+ * Gets Goals for a specific date
+ * @param {Date} date 
+ * @returns a JSON object containing goals
+ */
+async function getGoalsByDate(date){
+  let dateGoals = null
+  const DATE_STRING = date.toISOString().split('T')[0]
+  console.log(DATE_STRING)
+  await get(child(userRef,DATE_STRING)).then((snapshot)=>{
+    if(snapshot.exists()){
+      dateGoals = snapshot.val()
+    }
+  }).catch((error)=>{
+    console.error(error)
+  })
+  return Promise.resolve(dateGoals)
+}
+/**
  * Gets the users Daily Intake
  * @param {String} userid the google userid of the user
  * @returns the Daily Intake object
@@ -60,6 +78,7 @@ async function getUserStats(userid){
  return Promise.resolve(userStats)
   
 }
+
 /**
  * Pushes a new User object to the firebase database
  * @param {*} userid the google id string of the user
@@ -82,14 +101,17 @@ async function pushUser(userid, userEmail) {
   return false;
 }
 /**
- * 
+ * Stores goal in firebase
  * @param {String, Number} userid the id of the user
  * @param {Object} goal the goal object
  */
 async function addGoal(userid, goal){
-  const baseRef = ref(db, userid+'/Goals/'+goal.name)
+  let baseRef = ref(db, userid+'/Goals/'+goal.date+"/"+goal.name)
   push(baseRef)
   set(baseRef, goal)
+  baseRef = ref(db, goal.date+"/"+goal.name)
+  push(baseRef)
+  set(baseRef,goal)
 }
 async function updateScanFlag(userid){
   const baseRef = ref(db, userid+'/Scan_Items')
@@ -101,7 +123,8 @@ async function updateRescanTable(userid, items){
   push(baseRef)
   set(baseref, items)
 }
-export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag};
+
+export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag, getGoalsByDate};
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console

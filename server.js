@@ -1,11 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { addGoal, getUserData, getUserGoals, getUserStats, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
+import { addGoal, getGoalsByDate, getUserData, getUserGoals, getUserStats, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
 import cookieParser from 'cookie-parser'
 import path from 'path';
 import {fileURLToPath} from 'url';
 
 import { checkAuthenticated, verify} from './Controllers/login_controller.js'
+import { sendEmail } from './emailFunctions.js';
+import { time } from 'console';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -83,7 +85,8 @@ server.post('/addGoal',(req, res)=>{
         const GOAL = {
             "name":req.body.goalName,
             "content":req.body.goalText,
-            "date":req.body.completionDate
+            "date":req.body.completionDate,
+            "email": req.body.userEmail
         }
         addGoal(req.body.userID, GOAL)
 
@@ -98,5 +101,15 @@ server.post('/getGoals', (req, res)=>{
     })
   
 })
+/**
+ * Every day check if emails need to be sent
+ */
+setInterval(async()=>{
+    console.log('Sent emails for today')
+    const GOALS = await getGoalsByDate(new Date())
+    Object.keys(GOALS).forEach((goal)=>{
+        sendEmail(GOALS[goal].email,GOALS[goal])
+    })
+}, 86400*1000 )
 const PORT = process.env.PORT ||7500;
 server.listen(PORT, console.log(`Server started  on port ${PORT}`))

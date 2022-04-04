@@ -13,11 +13,11 @@ function sendEmail(email, goal){
     const mailDetails = {
         from: 'thomasknechtel42@gmail.com',
         to: email,
-        subject: 'Your goal: '+goal.name+' completion date is 1 day away!',
+        subject: 'Your goal: '+goal.name+' completion date is today!',
         text: 'Goal content: '+goal.content
     }
     transporter.sendMail(mailDetails, (error, info)=>{
         if(error) console.error(error)
     })
 }
-sendEmail('thomasknechtel42@gmail.com', {name:'Lose weight', content: 'lose 10 pounds by friday'})
+export { sendEmail}

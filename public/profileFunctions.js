@@ -11,8 +11,11 @@ requestGoals.send()
  */
 requestGoals.onload=function(){
     const GOALS =JSON.parse(requestGoals.response)
-    Object.keys(GOALS).forEach((key)=>{
-        addGoalToTable(GOALS[key])
+    Object.keys(GOALS).forEach((date)=>{
+        Object.keys(GOALS[date]).forEach((key)=>{
+              addGoalToTable(GOALS[date][key])
+        })
+      
     })
 }
 /**

@@ -30,6 +30,7 @@ async function verify(req, res){
 function checkAuthenticated(req, res, next){
     let token = req.cookies["user_cookie"]  
     let userID
+    let userEmail
     console.log('ran')
     async function verify() {
         const ticket = await client.verifyIdToken({
@@ -38,10 +39,12 @@ function checkAuthenticated(req, res, next){
         });
         const payload = ticket.getPayload();
         userID = payload['sub'];
+        userEmail = payload.email
       }
       verify()
       .then(()=>{
           req.body.userID=userID
+          req.body.userEmail =userEmail
           next(req, res);
       }).catch(()=>{
           res.redirect('/login.html')
