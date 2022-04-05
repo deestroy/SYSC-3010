@@ -32,8 +32,10 @@ def return_data():
     item = response.json()
     print(type(item))
     calories = (((item.get("foods")[0]).get("foodNutrients"))[3]).get("nutrientNumber")
-    print(calories)
-    return {"calories": calories}
+    size = item.get("foods")[0].get("servingSize")
+    name = item.get("foods")[0].get("description")
+    print(name)
+    return {"name": name, "size": size, "calories": calories}
 return_data()
 # except:
 #     print("Connection Failed.")
