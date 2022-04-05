@@ -107,13 +107,13 @@ def stream_handler(message):
 
 def get_part_of_day(h):
     return (
-        "morning"
+        "breakfast"
         if 5 <= h <= 11
-        else "afternoon"
+        else "lunch"
         if 12 <= h <= 17
-        else "evening"
+        else "snack"
         if 18 <= h <= 23
-        else "night"
+        else "dinner"
     )
 def readData():
     # Returns the entry as an ordered dictionary (parsed from json)
@@ -121,7 +121,7 @@ def readData():
         anotherTest = db.child("106073704998317597247").child("ScanItems").get()
         if (anotherTest.val() == True):
             data = testing.startcamera()
-            writeData(get_part_of_day(datetime.now().hour),data.get("Calories"), datetime.now())
+            writeData(get_part_of_day(data.get("name"), datetime.now().hour),data.get("Calories"), data.get("size"), datetime.now())
         time.sleep(1)
 
     # anotherTest.each()
@@ -138,4 +138,3 @@ if __name__ == "__main__":
     #     # write data
     #     writeData(food.Meal_Name(), food.Meal_Type,
     #               food.Calories, food.Date)
-
