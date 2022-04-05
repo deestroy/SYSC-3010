@@ -118,7 +118,6 @@ def readData():
     # print(stream_handler.message)
     
 
-    return True
 
 if __name__ == "__main__":
     readData("User0", 9)
