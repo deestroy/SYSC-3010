@@ -120,16 +120,20 @@ async function updateIntake(userid, calories){
  */
 async function pushUser(userid, userEmail) {
   var data = await getUserData(userid)
-  const emailParts = userEmail.replace('@','')
-  emailParts.replace('.','')
+  let emailParts = userEmail.replace('@','')
+  emailParts = emailParts.replace('.','')
   if ( data == null) {
-    const baseRef = ref(db, userid);
+    let baseRef = ref(db, userid);
     push(baseRef);
     let user = {
       email: userEmail
     }
     set(baseRef, user);
-    push(ref(db, '/display_'+emailParts))
+    baseRef = ref(db, '/display_'+emailParts)
+    set(baseRef, {
+      'email':userEmail,
+      isRequest: 0
+    })
     return true;
   }
   return false;
