@@ -10,13 +10,21 @@ function scan() {
  * sends a rescan POST request to the server. Passes all items that are clicked in the POST body.
  */
 function rescan() {
-  const items = document.getElementsByClassName('clicked');
-  const itemList = [];
-  items.map((item) => itemList.push(item.children.item(0).innerHTML));
+  const items = Array.from(document.getElementsByClassName('clicked'));
+  itemList = {}
+  items.map((item) => {
+    let item_row = item.children
+    const ITEM = {
+      'Meal_Name':item_row[0].innerHTML,
+      'Calories': item_row[1].innerHTML,
+      'Weight':item_row[3].innerHTML
+    }
+    itemList[item_row[0].innerHTML]=ITEM
+  })
   const req = new XMLHttpRequest();
   req.open('post', '/rescan');
   req.setRequestHeader('Content-Type', 'application/json');
-  req.send(JSON.stringify(itemList));
+  req.send(JSON.stringify({'items':itemList}));
 }
 /**
  * get Profile page

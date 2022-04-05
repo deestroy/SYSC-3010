@@ -62,9 +62,29 @@
     xhr.send()
     xhr.onload=()=>{
         const USER_DATA = JSON.parse(xhr.response)
-        const items = USER_DATA['Calorie_Count']
+        let items = USER_DATA['Calorie_Count']
+        let itemsToUpdate = USER_DATA['weigh_items']
+        let flag = false
         Object.keys(items).forEach((key) => {
-        addItem(items[key]);
+            const item = items[key]
+            addItem(item);
+            if(item.Editable&&itemsToUpdate!=undefined){
+                Object.keys(itemsToUpdate).forEach(itemKey=>{
+                    let itemToUpdate = itemsToUpdate[itemKey]
+                    const removeRequest = new XMLHttpRequest()
+                    if(itemToUpdate.Meal_Name==item.Meal_Name){
+                        itemToUpdate.Calories -= item.Calories
+                        itemToUpdate.Weight -= item.Weight
+                        addItemRescanned(itemToUpdate)
+                        if(!flag){
+                            removeRequest.open('delete', '/items_updated')
+                            removeRequest.send()
+                            flag=true
+                        }
+                    }
+                })
+                item.Editable=false
+            }
   });
     }
 </script>

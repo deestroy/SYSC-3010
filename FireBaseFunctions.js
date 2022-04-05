@@ -1,5 +1,5 @@
 import {
-  getDatabase, ref, get, child, push, set,
+  getDatabase, ref, get, child, push, set, remove
 } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 var data 
@@ -19,6 +19,17 @@ const userRef = ref(db);
 async function getUserData(userid) {
   let userData = null
   await get(child(userRef, userid)).then((snapshot) => {
+    if (snapshot.exists()) {
+      userData = snapshot.val();
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+  return Promise.resolve(userData)
+}
+async function getItemsToRescan(userid){
+  let userData = null
+  await get(child(userRef, userid+"/weigh_items")).then((snapshot) => {
     if (snapshot.exists()) {
       userData = snapshot.val();
     }
@@ -142,7 +153,7 @@ async function addGoal(userid, goal){
  * @param {*} email the email of the user
  */
 async function updateScanFlag(userid, email){
-  let baseRef = ref(db, userid+'/ScanItems')
+  let baseRef = ref(db, userid+'/ScanItems') //  userid/ScanItems
   let emailParts = email.replace('@','')
   emailParts = emailParts.replace('.','')
   push(baseRef)
@@ -154,10 +165,12 @@ async function updateScanFlag(userid, email){
 async function updateRescanTable(userid, items){
   const baseRef =ref(db, userid+"/weigh_items")
   push(baseRef)
-  set(baseref, items)
+  set(baseRef,items)
 }
-
-export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag, getGoalsByDate, updateIntake};
+async function removeRescanItems(userid){
+  remove(ref(db, userid+"/weigh_items"))
+}
+export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag, getGoalsByDate, updateIntake, getItemsToRescan, removeRescanItems};
 /*  Style used: airbnb. FLAKE8 can not be used for JavaScript. ESLint output:
 C:\Users\Thomas\Documents\3010Project\SYSC-3010\FireBaseFunctions.js
   27:5  warning  Unexpected console statement  no-console

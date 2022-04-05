@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser'
-import { addGoal, getGoalsByDate, getUserData, getUserGoals, getUserStats, updateIntake, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
+import { addGoal, getGoalsByDate, getItemsToRescan, getUserData, getUserGoals, getUserStats, removeRescanItems, updateIntake, updateRescanTable, updateScanFlag} from './FireBaseFunctions.js'
 import cookieParser from 'cookie-parser'
 import path from 'path';
 import {fileURLToPath} from 'url';
@@ -34,6 +34,7 @@ server.post('/user_items', async(req, res)=>{
     
         const USER_ID=req.body.userID
         const USER_DATA = await getUserData(USER_ID)
+    
         res.setHeader('Content-Type', 'application/json')
         res.send(USER_DATA)
     })
@@ -48,7 +49,7 @@ server.post('/scan', async(req, res)=>{
 })
 server.post('/rescan',async (req,res)=>{
     await checkAuthenticated(req,res, (req, res)=>{
-       updateRescanTable(req.body)
+       updateRescanTable(req.body.userID, req.body.items)
         updateScanFlag(req.body.userID, req.body.userEmail)
         res.sendStatus(200)
     })
@@ -114,6 +115,11 @@ server.post('/getGoals', async(req, res)=>{
         res.send(JSON.stringify(GOALS))
     })
   
+})
+server.delete('/items_updated', async(req, res)=>{
+    await checkAuthenticated(req, res, async (req, res)=>{
+        removeRescanItems(req.body.userID)
+    })
 })
 /**
  * Every day check if emails need to be sent
