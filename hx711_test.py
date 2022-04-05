@@ -15,6 +15,7 @@ import example_weight as ex
 from picamera import PiCamera
 import test2 as testing
 import example_weight as eweight
+from datetime import datetime
 # import RPi.GPIO as GPIO  # import GPIO
 # from food_data import food
 
@@ -70,7 +71,7 @@ def find_weight():
 
 
 # Write food weights to database and push it to firebase
-def writeData(Meal_Name, Meal_Type, Calories, Date):
+def writeData(Meal_Name, Meal_Type, Calories, food_weight, Date):
     '''
     Return null
     '''
@@ -85,6 +86,7 @@ def writeData(Meal_Name, Meal_Type, Calories, Date):
     # Each 'child' is a JSON key:value pair
     # each item added
     c = "Item" + str(entry_id)
+    Calories = round(Weight/food_weight * Calories, 1)
 
     # assign the meals in the firebase
     sens = {'Meal_Name': Meal_Name, 'Meal_Type': Meal_Type,
@@ -103,13 +105,23 @@ def stream_handler(message):
         # recursive_find()
         print("here")
 
+def get_part_of_day(h):
+    return (
+        "morning"
+        if 5 <= h <= 11
+        else "afternoon"
+        if 12 <= h <= 17
+        else "evening"
+        if 18 <= h <= 23
+        else "night"
+    )
 def readData():
     # Returns the entry as an ordered dictionary (parsed from json)
     while True:
         anotherTest = db.child("106073704998317597247").child("ScanItems").get()
         if (anotherTest.val() == True):
-            testing.startcamera()
-
+            data = testing.startcamera()
+            writeData(get_part_of_day(datetime.now().hour),data.get("Calories"), datetime.now())
         time.sleep(1)
 
     # anotherTest.each()
@@ -117,7 +129,6 @@ def readData():
     #myTest = db.child(username).child("Calorie_Count").stream(stream_handler, stream_id="new_posts")
     # print(stream_handler.message)
     
-
 
 if __name__ == "__main__":
     readData("User0", 9)
@@ -127,3 +138,4 @@ if __name__ == "__main__":
     #     # write data
     #     writeData(food.Meal_Name(), food.Meal_Type,
     #               food.Calories, food.Date)
+
