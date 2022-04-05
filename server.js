@@ -122,13 +122,10 @@ server.delete('/items_updated', async(req, res)=>{
     })
 })
 let endDate = new Date()
-endDate.setHours(13)
-endDate.setMinutes(5)
+endDate.setHours(15)
+endDate.setMinutes(47)
 let startTime = Date.now()
-/**
- * Every day check if emails need to be sent
- */
-setInterval(async()=>{
+async function sendEmailOnTime(){
     console.log('Sent emails for today')
     const GOALS = await getGoalsByDate(new Date())
     if(GOALS !=undefined){
@@ -137,8 +134,14 @@ setInterval(async()=>{
         })
     }
     
-    endDate.setDate(endDate.getDate+1)
+    endDate.setUTCDate(endDate.getUTCDate()+1)
     startTime=Date.now()
-}, endDate.getTime()-startTime)
+    clearInterval(timer)
+    setTimeout(sendEmailOnTime, endDate.getTime()-startTime)
+}
+/**
+ * Every day check if emails need to be sent
+ */
+ let timer = setTimeout(sendEmailOnTime, endDate.getTime()-startTime)
 const PORT = process.env.PORT ||7500;
 server.listen(PORT, console.log(`Server started  on port ${PORT}`))
