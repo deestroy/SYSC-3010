@@ -2,9 +2,8 @@ import requests
 from time import sleep
 import json
 
-UPC = "00070247172525"
-def return_data():
-    UPC = "00070247172525"
+#UPC = "00070247172525"
+def return_data(UPC):
     headers = {
         'accept': 'application/json',
     }
@@ -36,7 +35,7 @@ def return_data():
     name = item.get("foods")[0].get("description")
     print(name)
     return {"name": name, "size": size, "calories": calories}
-return_data()
+
 # except:
 #     print("Connection Failed.")
 #     quit()
