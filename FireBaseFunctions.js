@@ -129,7 +129,7 @@ async function pushUser(userid, userEmail) {
       email: userEmail
     }
     set(baseRef, user);
-    baseRef = ref(db, '/display_'+emailParts)
+    baseRef = ref(db, 'RPI_Display/display_'+emailParts)
     set(baseRef, {
       'email':userEmail,
       isRequest: 0
@@ -162,7 +162,7 @@ async function updateScanFlag(userid, email){
   emailParts = emailParts.replace('.','')
   push(baseRef)
   set(baseRef, true)
-  baseRef = ref(db,'RPI_Display/display_'+emailParts)
+  baseRef = ref(db,'RPI_Display/display_'+emailParts+"/isRequest")
   push(baseRef)
   set(baseRef, 1 )
 }
@@ -171,7 +171,7 @@ async function updateRescanTable(userid, items){
   push(baseRef)
   set(baseRef,items)
 }
-async function removeRescanItems(userid){
+async function removeRescanItems(useid){
   remove(ref(db, userid+"/weigh_items"))
 }
 export { getUserData, pushUser, getUserStats, addGoal, getUserGoals, updateRescanTable, updateScanFlag, getGoalsByDate, updateIntake, getItemsToRescan, removeRescanItems};
