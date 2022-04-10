@@ -44,8 +44,3 @@ email = input("    Enter Email: ")
 cursor.execute('''INSERT into Device_Info (user, email) values (?, ?)''', (user, email));
 dbconnect.commit();
 print("Email has been registered")
-    
-<<<<<<< HEAD
-
-=======
->>>>>>> 5749bbf (first commit)
