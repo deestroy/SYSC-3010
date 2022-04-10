@@ -30,11 +30,8 @@ def isRequest():
     RpiData = db.child("RPI_Display").get()
     x = RpiData.each()
     
-<<<<<<< HEAD
     length = len(x)
-=======
     
->>>>>>> 5749bbf (first commit)
     deviceNum = 0
     
     for tmp in x:
@@ -53,10 +50,7 @@ def isRequest():
 
     if x[deviceNum].val()["isRequest"] != 1:
         return False
-<<<<<<< HEAD
     
-=======
->>>>>>> 5749bbf (first commit)
     return True
     
 def main():
@@ -84,10 +78,7 @@ def main():
     
     print("Getting User Data")
     items = firebaseData(user)
-<<<<<<< HEAD
-=======
 
->>>>>>> 5749bbf (first commit)
     menuDisplay(items)
     
     print("Resetting Request")
@@ -108,8 +99,4 @@ def main():
     print("Program has Completed.")
     
 if __name__ == "__main__":
-<<<<<<< HEAD
     main()
-=======
-    main()
->>>>>>> 5749bbf (first commit)
