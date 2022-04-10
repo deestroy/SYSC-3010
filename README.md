@@ -1,6 +1,10 @@
 # Calorie Counter
 SYSC 3010 Project
 L1-G3
+## Team Members:
+- Thomas Knechtel
+- Keith Lam
+- Dhriti Aravind
 
 ## Project Description:
 The calorie counter will perform 4 main tasks: count the total daily calories consumed and relay it back to the user in a GUI; scan barcodes of the food products using a Raspberry Pi camera alongside a barcode database; displaying the progress of an individual user on a Raspberry Pi Sense Hat and on the Web GUI; and measuring the amount of pre-packaged food consumed and relaying it back to the database. To accomplish these 4 main tasks we have broken our project down to its functional requirements. 
@@ -17,7 +21,7 @@ The RPI Controller will operate the camera, weight sensor and rotating platform.
 Lastly, this project requires a bi-directional Web Application for users to login, send a request to scan items and access their information at any time.
 
 ## Setup/Installation:
-Before Setting up our project, it is important to note that there are a lot of hardware components used. Please refer below the setup steps to see the list the hardware requirements.
+Before setting up our project, it is important to note that there are a lot of hardware components used. Please refer below the setup steps to see the list the hardware components.
 
 ### Hardware Components
 - Servo Motor
@@ -26,14 +30,16 @@ Before Setting up our project, it is important to note that there are a lot of h
 - HX711 Sensor
 - SenseHat
 - 3x Raspberry Pi
-### Connecting Hardware components
+- 
+### Connecting Hardware Components
 1. To connect the servo motor follow the description below.
 -  Motor's VCC (Red) ⟶ Raspberry Pi 3.3V Pin
 -  Motor's GND (Brown/Black) ⟶ Raspberry Pi GND Pin
 -  Motor's Pulse ⟶ Raspberry Pi Pin 11 (GPIO 17)
 
 The camera is connected the camera port. More information on how to connect and setup the camera can be found [here](https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera).
-3. On the same Raspberry Pi as the camera, connect the load cell to the HX711 sensor as described below.
+
+2. On the same Raspberry Pi as the camera, connect the load cell to the HX711 sensor as described below.
 - E+ ⟶ Red
 - E- ⟶ Black
 - A+ ⟶ White
@@ -48,7 +54,34 @@ From there, connect the HX711 sensor to the RPi and the 4V - 6V power source.
 The result should be as shown below:
 ![Final Fritzing](image.png)
 
+3. On another Raspberry Pi, attach the SenseHat to the Raspberry Pi ensuring all 40 pins from the Pi are properly inserted to ensure connectivity.
+
 ### Installing Software
+#### Software Dependancies
+Prior to running the software in this repository, make sure you have the following packages installed. This code was written using Python 3.9.
+
+On the Raspberry Pi with the camera connected to it, install packages to allow for barcode detection and scanning. If you don't have pip installed already, follow [this tutorial](https://jamesjdavis.medium.com/how-to-install-opencv-on-raspberry-pi-7-easy-steps-7b20a59ae6b2) to install OpenCV.
+
+```
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ pip3 install numpy
+$ pip3 install python3-opencv
+```
+For barcode detection and GPIO usage install with
+
+```
+$ pip3 install RPi.GPIO
+$ pip3 install pyzbar
+```
+
+To connect to a Firebase account to create an account, and start a new project, then, install pyrebase.
+
+```
+$ sudo apt install pyrebase
+```
+
+#### Software Dependancies
 1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory.
 
 | RPI Controller: | RPI Server: | RPI Display:             |
@@ -61,10 +94,5 @@ The result should be as shown below:
 3. Run RPI_Display.py. This program will run/idle until an event occurs.
 
 
-## Team Members:
-Student A: Thomas Knechtel
 
-Student B: Keith Lam
-
-Student C: Dhriti Aravind
 
