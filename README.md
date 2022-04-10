@@ -23,7 +23,7 @@ Before Setting up our project, it is important to note that there are a lot of h
 1. 
 
 ### Installing Software
-1. Using our repository, clone the following files to the following Raspberry Pi's
+1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory.
 
 | RPI Controller: | RPI Server: | RPI Display:             |
 |-----------------|-------------|--------------------------|
@@ -32,6 +32,7 @@ Before Setting up our project, it is important to note that there are a lot of h
 |                 |             | RPI_Display_Register.py  |
 
 2. Register a user to the RPI Display by running the RPI_Display_Register.py. Enter a valid user and corresponding user email that already has been registered using the web application. (Note the program can be used to change the usesr registered to the device.)
+3. Run RPI_Display.py. This program will run/idle until an event occurs.
 
 ### Hardware Requirements
 - Nema Motor 17
