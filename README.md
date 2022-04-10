@@ -31,6 +31,8 @@ Before Setting up our project, it is important to note that there are a lot of h
 |                 |             | RPI_Display_Functions.py |
 |                 |             | RPI_Display_Register.py  |
 
+2. Register a user to the RPI Display by running the RPI_Display_Register.py. Enter a valid user and corresponding user email that already has been registered using the web application. (Note the program can be used to change the usesr registered to the device.)
+
 ### Hardware Requirements
 - Nema Motor 17
 - Stepper Motor Driver
