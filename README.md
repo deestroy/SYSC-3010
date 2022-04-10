@@ -26,6 +26,7 @@ Before Setting up our project, it is important to note that there are a lot of h
 - E- ⟶ Black
 - A+ ⟶ White
 - A- ⟶ Green
+
 From there, connect the HX711 sensor to the RPi and the power source.
 - VCC ⟶ Positive Pin of power source
 - DT ⟶ Raspberry Pi Pin 29 (GPIO 5)
