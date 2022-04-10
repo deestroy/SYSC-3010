@@ -20,8 +20,19 @@ Lastly, this project requires a bi-directional Web Application for users to logi
 Before Setting up our project, it is important to note that there are a lot of hardware components used. Please refer below the setup steps to see the list the hardware requirements.
 
 ### Connecting Hardware components
-1. For connecting the servo motor follow the diagram: ![Motor FI](image.png) The motor's VCC is connected the RPi's 3.3V pin. The motor's ground pin is connected to the RPi's GND pin and the pulse pin is connected to GPIO17. The camera is connected the camera port. More information on how to connect and setup the camera can be found [here](https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera).
-2. On the same Raspberry Pi as the camera, connect the 
+1. For connecting the servo motor follow the diagram below. The motor's VCC is connected the RPi's 3.3V pin. The motor's ground pin is connected to the RPi's GND pin and the pulse pin is connected to GPIO17. The camera is connected the camera port. More information on how to connect and setup the camera can be found [here](https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera).
+2. On the same Raspberry Pi as the camera, connect the load cell to the HX711 sensor as shown below.
+- E+ ⟶ Red
+- E- ⟶ Black
+- A+ ⟶ White
+- A- ⟶ Green
+From there, connect the HX711 sensor to the RPi and the power source.
+- VCC ⟶ Positive Pin of power source
+- DT ⟶ Raspberry Pi Pin 29 (GPIO 5)
+- SCK ⟶ Raspberry Pi Pin 31 (GPIO 6)
+- GND ⟶ Negative Pin of power source
+The result should be as shown below:
+![Final Fritzing](image.png)
 
 ### Installing Software
 1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory.
