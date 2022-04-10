@@ -1,6 +1,7 @@
 # Calorie Counter
 SYSC 3010 Project
 L1-G3
+---
 ## Team Members:
 - Thomas Knechtel
 - Keith Lam
@@ -30,7 +31,7 @@ Before setting up our project, it is important to note that there are a lot of h
 - HX711 Sensor
 - SenseHat
 - 3x Raspberry Pi
-- 
+
 ### Connecting Hardware Components
 1. To connect the servo motor follow the description below.
 -  Motor's VCC (Red) ⟶ Raspberry Pi 3.3V Pin
@@ -81,14 +82,17 @@ To connect to a Firebase account to create an account, and start a new project, 
 $ sudo apt install pyrebase
 ```
 
-#### Software Dependancies
+#### 
 1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory.
 
 | RPI Controller: | RPI Server: | RPI Display:             |
 |-----------------|-------------|--------------------------|
-|                 |             | RPI_Display.py           |
-|                 |             | RPI_Display_Functions.py |
-|                 |             | RPI_Display_Register.py  |
+| Scan_Barcode_Unit_Test.py                |             | RPI_Display.py           |
+| cameras.py                |             | RPI_Display_Functions.py |
+| example_weight.py                |             | RPI_Display_Register.py  |
+|hx711_test.py|               |               |
+|get_Barcode_Data_Unit_Test.py|               |             |
+
 
 2. Register a user to the RPI Display by running the RPI_Display_Register.py. Enter a valid user and corresponding user email that already has been registered using the web application. (Note the program can be used to change the usesr registered to the device.)
 3. Run RPI_Display.py. This program will run/idle until an event occurs.
