@@ -45,15 +45,17 @@ Before setting up our project, it is important to note that there are a lot of h
 -  Motor's GND (Brown/Black) ⟶ Raspberry Pi GND Pin
 -  Motor's Pulse ⟶ Raspberry Pi Pin 11 (GPIO 17)
 
-The camera is connected the camera port. More information on how to connect and setup the camera can be found [here](https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera).
+The camera is connected the camera port. More information on how to connect and setup the camera can be found [here](https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera). Mount the camera on the motor using some double sided tape. 
 
-2. On the same Raspberry Pi as the camera, connect the load cell to the HX711 sensor as described below.
+<img src="IMG_1807.png" width="300">
+
+2. On the same Raspberry Pi as the camera (the Controller), connect the load cell to the HX711 sensor as described below.
 - E+ ⟶ Red
 - E- ⟶ Black
 - A+ ⟶ White
 - A- ⟶ Green
 
-From there, connect the HX711 sensor to the RPi and the 4V - 6V power source.
+From there, connect the HX711 sensor to the RPi Controller and the 4V - 6V power source.
 - VCC ⟶ Positive Pin of power source
 - DT ⟶ Raspberry Pi Pin 29 (GPIO 5)
 - SCK ⟶ Raspberry Pi Pin 31 (GPIO 6)
@@ -61,6 +63,7 @@ From there, connect the HX711 sensor to the RPi and the 4V - 6V power source.
 
 The result should be as shown below:
 ![Final Fritzing](image.png)
+<img width="398" alt="image" src="https://user-images.githubusercontent.com/39637258/162847014-c2b65645-2c95-4e48-8bfe-2215ea9d8a36.png">
 
 3. On another Raspberry Pi, attach the SenseHat to the Raspberry Pi ensuring all 40 pins from the Pi are properly inserted to ensure connectivity.
 
@@ -110,6 +113,18 @@ $ sudo apt install pyrebase
 
 2. Register a user to the RPI Display by running the RPI_Display_Register.py. Enter a valid user and corresponding user email that already has been registered using the web application. (Note the program can be used to change the user registered to the device.)
 3. Run RPI_Display.py. This program will run/idle until an event occurs.
+
+To activate the RPI controller, 
+1. Run `hx711_test.py` on the controller. Until someone presses scan on the GUI, the application will remain idle. 
+2. Once the 'Scan' button is pressed, you should see a preview of the camera similar to this:
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/39637258/162845879-e562711c-5949-416b-9f10-36c1fcc06586.png">
+
+Place a barcode in front of the camera. At this point the servo should also be intermitantly scanning. The video will display frame by frame the image on the screen. Press any key to move to the next.
+
+3. If the barcode is sucessfully detected, there should be a blue bounding box around the barcode. The window will close and the GUI will update itself. 
+If not, the console will display "no barcode detected".
+<img width="1121" alt="image" src="https://user-images.githubusercontent.com/39637258/162846682-65952241-1300-41d9-b324-1d6f56b614d5.png">
+
 
 
 
