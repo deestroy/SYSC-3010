@@ -1,7 +1,7 @@
 # Calorie Counter
 
 SYSC 3010 Project
-TA: Zein _____________
+TA: Zein Hajj-Ali
 
 ## L1-G3 Team Members:
 - Thomas Knechtel
