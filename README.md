@@ -63,7 +63,8 @@ From there, connect the HX711 sensor to the RPi Controller and the 4V - 6V power
 
 The result should be as shown below:
 ![Final Fritzing](image.png)
-<img width="398" alt="image" src="https://user-images.githubusercontent.com/39637258/162847014-c2b65645-2c95-4e48-8bfe-2215ea9d8a36.png">
+
+Attach a container using screws and an empty container and on the opposite side, mount the sensor to a wooden board.
 
 3. On another Raspberry Pi, attach the SenseHat to the Raspberry Pi ensuring all 40 pins from the Pi are properly inserted to ensure connectivity.
 
@@ -121,10 +122,12 @@ To activate the RPI controller,
 
 Place a barcode in front of the camera. At this point the servo should also be intermitantly scanning. The video will display frame by frame the image on the screen. Press any key to move to the next.
 
-3. If the barcode is sucessfully detected, there should be a blue bounding box around the barcode. The window will close and the GUI will update itself. 
-If not, the console will display "no barcode detected".
+3. If the barcode is sucessfully detected, there should be a blue bounding box around the barcode. If not, the console will display "no barcode detected".
 <img width="1121" alt="image" src="https://user-images.githubusercontent.com/39637258/162846682-65952241-1300-41d9-b324-1d6f56b614d5.png">
 
+4. On prompt from the command line, put the food on the sensor's container. Once the GUI has updated, you may take the food off of the sensor.
+
+<img width="398" alt="image" src="https://user-images.githubusercontent.com/39637258/162847191-26316a58-4127-4691-99ae-af225d455865.png">
 
 
 
