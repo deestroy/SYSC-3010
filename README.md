@@ -9,8 +9,7 @@ TA: Zein Hajj-Ali
 - Dhriti Aravind
 
 ## Project Summary:
-In this project, we created a web-based platform which allows people to log their daily calorie intake in an easy way to assist users to reach their goal weight. Through scanning a barcode through a Raspberry Pi camera, this system will accurately detect the amount of calories consumed by weighing the portion of food that will be consumed on the weighing surface. Our project will help monitor 100% of the users food intake; storing it in an online database and displaying it on a web GUI.
-
+In this project, we created a web-based platform allowing users to easily log, monitor and update their daily intake using items that they have previously scanned. Users scan a barcode through a Raspberry Pi camera, this system will accurately detect the amount of calories consumed by weighing the portion of food that is consumed. Our project allows users to monitor 100% of their food intake while storing it in an online database and displaying it on a web GUI. In order to meet their goals, users create goals and receive notification on the end date for these goals so that they can reflect on the progress they made.
 
 
 ## Project Description:
@@ -99,7 +98,16 @@ To connect to a Firebase account to create an account, and start a new project, 
 ```
 $ sudo apt install pyrebase
 ```
-
+#### Software Dependencies for Server
+##### The server dependencies:
+  body-parser, chai, cookie-parser, dotenv, express, express.js,firebase, google-auth-library, jsonwebtoken, mocha, nodemailer, nodemon,
+##### The server dev dependencies:
+  eslint, eslint-config-airbnb-base, eslint-plugin-import
+##### Installing server dependencies:
+1. Download nodejs from: https://nodejs.org/en/download/.
+2. Clone the git repository: https://github.com/deestroy/SYSC-3010
+3. In command line go to the Server folder
+4. type: npm install express (this will install all dependencies)
 ### Running the Application
 1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory.
 
@@ -129,6 +137,10 @@ Place a barcode in front of the camera. At this point the servo should also be i
 
 <img width="398" alt="image" src="https://user-images.githubusercontent.com/39637258/162847191-26316a58-4127-4691-99ae-af225d455865.png">
 
-
-
+### Running the Server
+1. After installing and setting up server, in the command line go to Server folder
+2. in command line type node server.js to start
+3. type into the browser http://localhost:7500/login.html
+4. Inorder to use google authentication without getting permission from google, use a test account
+5. Login with the following credentials: email: sysc3010test@gmail.com password: testing3010
 
