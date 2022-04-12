@@ -109,7 +109,7 @@ $ sudo apt install pyrebase
 3. In command line go to the Server folder
 4. type: npm install express (this will install all dependencies)
 ### Running the Application
-1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory.
+1. Using our repository, clone the following files to the following Raspberry Pi's. Make sure the files are located in the same directory. The file for the Raspberry Pi Controller is under 'Controller'.
 
 | RPI Controller: | RPI Server: | RPI Display:             |
 |-----------------|-------------|--------------------------|
