@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html style="min-height: 100%;position: relative;">
+    <head><link rel="stylesheet" href="css/profile.css"> </head>
+    
+    <body style="height: 100vh;">
+        <div style=" background-color: #fafafa;; height: 100%; display: flex; flex-wrap: wrap;align-content: flex-start; flex-direction: row; ">
+            <h1 style="width: 100%;">Profile</h1>
+            <form method="POST" style="display: flex;flex-wrap: wrap;background-color: rgb(215 215 255); row-gap: 10px; padding: 10px; flex-grow: 1;">
+                
+                    <div class="form-row"><label for="userName" class="form-label">Name:</label><input type="text" id="userName" style="width:30%;"></input></div>
+                    <div class="form-row"><label for="userEmail" class="form-label">Email:</label><input type="email" id="userEmail" style="width:30%;"></input></div>
+                    <div class="form-row"> <label for="userBirthDate" class="form-label">Birth Date:</label><input type="date" id="userBirthDate" style="width:20%;"></div>
+                    <div class="form-row"><label for="userHeight" class="form-label">Height:</label><input type="number" id="userHeight" style="width: 20%;"></div>
+                    <div class="form-row"><label for="userWeight" class="form-label">Weight:</label><input type="number" style="width: 20%;"></div>
+                    <div class="form-row" style="align-content: flex-end;"><input type="submit" ></div>
+    
+                
+            </form>
+        <div style=" padding-top: 10px; display: flex; flex-wrap:wrap; gap: 10px; flex-grow: 1;">
+            <div id="container" style="flex:1;background-color: rgb(215 215 255); padding-left: 30px; padding-right: 30px; display: flex; flex-wrap: wrap; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                <h1>Stats</h1>
+               
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div class="form-row">
+                            <label style="font-size: x-large;padding-right: 20px;">Average:</label><label id ="average" style="font-size: x-large;">0</label>
+                        </div>
+                        <div class="form-row">
+                             <label style="font-size: x-large;padding-right: 20px;">Median:</label><label id="median" style="font-size: x-large;">0</label>
+                        </div>
+    
+                    </div>
+                <div>
+                    <button class="button" onclick="monthButtonClick()">Monthly</button><button  class="button" onclick="yearlyButtonClick()">Yearly</button><button   class="button"onclick="allTimeButtonClick()">All Time</button>
+                    <canvas id="myChart" style="align-self: flex-end;"></canvas>
+                </div>
+                 
+            </div>
+            <div style=" padding-left: 30px; background-color: rgb(215 215 255); flex-grow: 1;">
+            <h1>Goals</h1>
+            <p1>Enter your goal's and receive reminders. </p1>
+            <form method="POST" action="/addGoal" enctype="application/x-www-form-urlencoded" >
+                <label for="goalName">Goal Name:</label><input type="text" name="goalName"></input>
+                <textarea name ="goalText"style="width: 100%;"></textarea>
+                <input name="completionDate" type="date">
+                <input type="submit" value="Submit">
+            </form>
+            <table id="goals_table" style="width: 100%;">
+
+            </table>
+            
+          
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src ="profileFunctions.js"></script>
+    </body>
+</html>

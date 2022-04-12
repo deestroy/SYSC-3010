@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+    <head><link rel="stylesheet" href="./node_modules/mocha/mocha.css"></head>
+<body>
+
+<h1>User Home</h1>
+<table id="UserData" style="width: 100%;">
+    <tbody>
+        <tr style="background-color: rgb(191, 191, 255);">
+            <th class="cell" style="width: 20%;">  Item Name  </th>
+            <th class="cell" style="width: 10%;">  calories  </th>
+            <th class="cell" style="width: 20%;">Meal Type</th>
+            <th class="cell" style=" width: 20%;">Weight</th>
+            <th>Date</th>
+    </tr></tbody></table>
+
+<script src='addItem.js'></script>
+<script src='calculateCalories.js'></script>
+<div id="mocha"></div>
+
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script>
+    mocha.ui('bdd')
+    mocha.reporter('html');
+    var expect = chai.expect;
+</script>
+<script src='UnitTests/addItemTest.js'></script>
+<script src = 'UnitTests/calculateCaloriesTest.js'></script>
+<script>mocha.run()</script>
+</body>
+</html>
