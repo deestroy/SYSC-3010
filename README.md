@@ -113,7 +113,7 @@ $ sudo apt install pyrebase
 
 | RPI Controller: | RPI Server: | RPI Display:             |
 |-----------------|-------------|--------------------------|
-| Scan_Barcode_Unit_Test.py                |             | RPI_Display.py           |
+| Scan_Barcode_Unit_Test.py                |   All files in Server folder          | RPI_Display.py           |
 | cameras.py                |             | RPI_Display_Functions.py |
 | example_weight.py                |             | RPI_Display_Register.py  |
 |hx711_test.py|               |               |
